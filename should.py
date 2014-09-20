@@ -3,18 +3,24 @@ import random
 import rivr
 from rivr.wsgi import WSGIHandler
 
-messages = [
-    'Yes, of course you should.',
-    'No, you should write your own goddamn code.',
-    'This is not even a valid question.',
-]
+# Loaded into global space so they're always in memory
+
+with open('messages.txt') as fp:
+    global messages
+    messages = fp.readlines()
+
+with open('gifs.txt') as fp:
+    global gifs
+    gifs = fp.readlines()
+
 
 class ShouldView(rivr.views.TemplateView):
     template_name = 'should.html'
 
     def get_context_data(request, **kwargs):
         return {
-            'message': random.choice(messages),
+            'message': random.choice(messages).strip(),
+            'gif': random.choice(gifs).strip(),
             'params': kwargs,
         }
 
