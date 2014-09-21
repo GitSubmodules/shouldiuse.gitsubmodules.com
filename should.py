@@ -1,11 +1,12 @@
 from os import path
+import codecs
 import random
 import rivr
 from rivr.wsgi import WSGIHandler
 
 # Loaded into global space so they're always in memory
 
-with open('messages.txt') as fp:
+with codecs.open('messages.txt', encoding='utf-8') as fp:
     global messages
     messages = fp.readlines()
 
